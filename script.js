@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AWS Label Shortener
 // @namespace    https://github.com/BenDutton
-// @version      1.0
+// @version      1.1.0
 // @description  Shorten AWS Header Labels
 // @author       Benjamin Dutton
 // @match        https://*.console.aws.amazon.com/*
@@ -21,12 +21,17 @@
 
         outputString = outputString.trim();
 
-        let capitalString = outputString.replace(/[a-z\s]/g, '');
+        let acronymRegex = outputString.match(/\(\w+\)/g);
+        if (acronymRegex) {
+            outputString = acronymRegex[0].replace(/[()]/g, '')
+        } else {
+            outputString = outputString.replace(/[a-z\s]/g, '');
+        }
 
-        if (capitalString.length > 1) {
-            outputString = capitalString.slice(0, 3);
+        if (outputString.length > 1) {
+            outputString = outputString.slice(0, 5);
         } else if (outputString.length > 5) {
-            outputString = `${outputString.slice(0, 3)}..`;
+            outputString = `${outputString.slice(0, 5)}..`;
         }
 
         item.innerHTML = outputString;
