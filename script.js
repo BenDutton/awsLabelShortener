@@ -28,10 +28,10 @@
             outputString = outputString.replace(/[a-z\s]/g, '');
         }
 
-        if (outputString.length > 1) {
-            outputString = outputString.slice(0, 5);
-        } else if (outputString.length > 5) {
+        if (outputString.length > 5) {
             outputString = `${outputString.slice(0, 5)}..`;
+        } else {
+            outputString = outputString.slice(0, 5);
         }
 
         item.innerHTML = outputString;
